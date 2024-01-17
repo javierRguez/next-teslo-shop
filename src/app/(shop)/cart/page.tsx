@@ -1,14 +1,9 @@
-import { QuantitySelector, Title } from "@/components";
-import { initialData } from "@/seed/seed";
-import Image from "next/image";
+import { Title } from "@/components";
+
 import Link from "next/link";
+import { ProductsInCart } from "./ui/ProductsInCart";
 
 export default function CartPage() {
-  const productInCart = [
-    initialData.products[0],
-    initialData.products[1],
-    initialData.products[2],
-  ];
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
       <div className="flex flex-col w-[1000px]">
@@ -20,23 +15,7 @@ export default function CartPage() {
               Continuar comprando
             </Link>
 
-            {productInCart.map((product) => (
-              <div key={product.slug} className="flex mb-5">
-                <Image
-                  src={`/products/${product.images[0]}`}
-                  width={100}
-                  height={100}
-                  alt={product.title}
-                  className="mr-5 rounded w-28 h-28"
-                />
-                <div>
-                  <p>{product.title}</p>
-                  <p>${product.price}</p>
-                  <QuantitySelector quantity={3} />
-                  <button className="underline mt-3">Remover</button>
-                </div>
-              </div>
-            ))}
+            <ProductsInCart />
           </div>
           <div className="bg-white rounded-xl shadow-xl p-7 h-fit">
             <h2 className="text-2xl mb-2">Resumen de orden</h2>

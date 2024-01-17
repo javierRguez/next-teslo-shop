@@ -6,8 +6,8 @@ interface State {
   cart: CartProduct[];
   addProductToCart: (product: CartProduct) => void;
   getTotalItems: () => number;
-  // updateProductQuantity
-  // removeProduct
+  updateProductQuantity: (product: CartProduct, quantity: number) => void;
+  removeProduct: (product: CartProduct) => void;
 }
 
 export const useCartStore = create<State>()(
@@ -42,6 +42,29 @@ export const useCartStore = create<State>()(
           return item;
         });
 
+        set({ cart: updatedCartProducts });
+      },
+      updateProductQuantity: (product: CartProduct, quantity: number) => {
+        if (quantity < 1) return;
+        const { cart } = get();
+        const uniqueItemCondition = (item: CartProduct) => {
+          return item.id === product.id && item.size === product.size;
+        };
+
+        const updatedCartProducts = cart.map((item) => {
+          if (uniqueItemCondition(item)) {
+            return { ...item, quantity: quantity };
+          }
+          return item;
+        });
+
+        set({ cart: updatedCartProducts });
+      },
+      removeProduct: (product: CartProduct) => {
+        const { cart } = get();
+        const updatedCartProducts = cart.filter(
+          (item) => item.id !== product.id || item.size !== product.size
+        );
         set({ cart: updatedCartProducts });
       },
     }),
