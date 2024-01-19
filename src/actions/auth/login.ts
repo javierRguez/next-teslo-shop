@@ -10,15 +10,18 @@ export async function authenticate(
   formData: FormData
 ) {
   try {
-    console.log({ form: Object.fromEntries(formData) });
-    await signIn("credentials", formData);
+    await signIn("credentials", {
+      ...Object.fromEntries(formData),
+      redirect: false,
+    });
+    return "Success";
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "Invalid credentials.";
+          return "Credenciales incorrectas, revise el email y la contraseña";
         default:
-          return "Something went wrong.";
+          return "Algo salió mal, inténtelo de nuevo";
       }
     }
     //throw error;
