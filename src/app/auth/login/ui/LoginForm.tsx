@@ -9,7 +9,6 @@ export const LoginForm = () => {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
   useEffect(() => {
-    console.log("dentro==>", errorMessage);
     if (errorMessage === "Success") {
       window.location.replace("/");
     }

@@ -4,6 +4,8 @@ import { z } from "zod";
 import prisma from "@/lib/prisma";
 import bcryptjs from "bcryptjs";
 
+const restrictedRutes = ["/profile", "/checkout"];
+
 export const authConfig: NextAuthConfig = {
   pages: {
     signIn: "/auth/login",
@@ -11,6 +13,22 @@ export const authConfig: NextAuthConfig = {
   },
 
   callbacks: {
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user;
+      const isRestrictedRoute = restrictedRutes.some((route) =>
+        nextUrl.pathname.startsWith(route)
+      );
+
+      if (nextUrl.pathname.startsWith("/auth") && isLoggedIn) {
+        return Response.redirect(new URL("/", nextUrl));
+      }
+
+      if (isRestrictedRoute) {
+        if (isLoggedIn) return true;
+        return Response.redirect(new URL("/auth/login", nextUrl)); // Redirect unauthenticated users to login page
+      }
+      return true;
+    },
     jwt({ token, user }) {
       if (user) {
         token.data = user;
@@ -21,7 +39,6 @@ export const authConfig: NextAuthConfig = {
     // @ts-ignore
     session({ session, token }) {
       session.user = token.data as any;
-      console.log("==========>", token);
       return session;
     },
   },
