@@ -1,4 +1,4 @@
-import { PayPalButton } from "@/components";
+import { OrderPaidStatus, PayPalButton } from "@/components";
 import { Order } from "@/interfaces";
 import { currencyFormat } from "@/utils";
 
@@ -51,7 +51,11 @@ export const OrderSummary = ({ order }: Props) => {
         </span>
       </div>
       <div className="w-full mb-5 mt-5">
-        <PayPalButton />
+        {order.isPaid ? (
+          <OrderPaidStatus isPaid={order.isPaid} />
+        ) : (
+          <PayPalButton amount={order!.total} orderId={order!.id} />
+        )}
       </div>
     </div>
   );

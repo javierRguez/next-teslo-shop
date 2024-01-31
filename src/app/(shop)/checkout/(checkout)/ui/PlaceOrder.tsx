@@ -43,7 +43,6 @@ export const PlaceOrder = () => {
     // await sleep(2);
 
     const resp = await placeOrder(productsToOrder, stateAddress);
-    console.log("resp==>", resp);
     if (!resp.ok) {
       setIsPlacingOrder(false);
       setErrorMessage(resp.message);

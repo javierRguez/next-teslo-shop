@@ -2,7 +2,7 @@ import { Title } from "@/components";
 import { OrderProductSummary } from "./ui/OrderProductSummary";
 import { getOrderById } from "@/actions/order/get-order-by-id";
 import { notFound, redirect } from "next/navigation";
-import { OrderItem } from "@/interfaces/order.interfaces";
+import { OrderItem } from "@/interfaces/order.interface";
 import { OrderSummary } from "./ui/OrderSummary";
 
 interface Props {

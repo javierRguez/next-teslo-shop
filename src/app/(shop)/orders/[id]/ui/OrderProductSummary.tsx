@@ -1,8 +1,7 @@
+import { OrderPaidStatus } from "@/components";
 import { OrderItem } from "@/interfaces";
 import { currencyFormat } from "@/utils";
-import clsx from "clsx";
 import Image from "next/image";
-import { IoCardOutline } from "react-icons/io5";
 
 interface Props {
   orderItems: OrderItem[];
@@ -12,15 +11,7 @@ interface Props {
 export const OrderProductSummary = ({ orderItems, isPaid }: Props) => {
   return (
     <div className="flex flex-col mt-5">
-      <div
-        className={clsx(
-          "flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5",
-          { "bg-red-500": !isPaid, "bg-green-700": isPaid }
-        )}
-      >
-        <IoCardOutline size={30} />
-        <span className="mx-2">{isPaid ? "Pagada" : "No pagada"}</span>
-      </div>
+      <OrderPaidStatus isPaid={isPaid} />
 
       {orderItems.map((item) => (
         <div key={`${item.product.slug}-${item.size}`} className="flex mb-5">
