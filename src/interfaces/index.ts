@@ -5,3 +5,4 @@ export * from "./product.interface";
 export * from "./paypal.interface";
 export * from "./user.interface";
 export * from "./enum/role.enum";
+export * from "./category.interface";
