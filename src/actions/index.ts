@@ -17,3 +17,4 @@ export * from "./product/get-stock-by-slug";
 export * from "./product/product-pagination";
 export * from "./user/change-user-rol";
 export * from "./user/get-paginated-users";
+export * from "./product/create-update-product";

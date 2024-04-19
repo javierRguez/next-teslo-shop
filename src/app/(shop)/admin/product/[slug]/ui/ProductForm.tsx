@@ -1,12 +1,18 @@
 "use client";
 
-import { Category, Gender, Product, ProductImage } from "@/interfaces";
+import { createUpdateProduct } from "@/actions";
+import { ProductImage } from "@/components";
+import {
+  Category,
+  Gender,
+  Product,
+  ProductImage as ProductImageModel,
+} from "@/interfaces";
 import clsx from "clsx";
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 
 interface Props {
-  product: Product & { ProductImage: ProductImage[] };
+  product: Partial<Product> & { ProductImage?: ProductImageModel[] };
   categories: Category[] | undefined;
 }
 
@@ -36,7 +42,7 @@ export const ProductForm = ({ product, categories }: Props) => {
   } = useForm<FormInputs>({
     defaultValues: {
       ...product,
-      tags: product.tags.join(", "),
+      tags: product.tags?.join(", "),
       sizes: product.sizes ?? [],
       //Todo:Images
     },
@@ -59,7 +65,25 @@ export const ProductForm = ({ product, categories }: Props) => {
     setValue("sizes", Array.from(selectedSizes));
   };
 
-  const onSubmit = async (data: FormInputs) => {};
+  const onSubmit = async (data: FormInputs) => {
+    const formData = new FormData();
+    const { ...productToSave } = data;
+
+    if (product.id) {
+      formData.append("id", product.id ?? "");
+    }
+    formData.append("title", productToSave.title);
+    formData.append("slug", productToSave.slug);
+    formData.append("description", productToSave.description);
+    formData.append("price", productToSave.price.toString());
+    formData.append("inStock", productToSave.inStock.toString());
+    formData.append("sizes", productToSave.sizes.toString());
+    formData.append("tags", productToSave.tags);
+    formData.append("categoryId", productToSave.categoryId);
+    formData.append("gender", productToSave.gender);
+
+    const { ok } = await createUpdateProduct(formData);
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -147,6 +171,15 @@ export const ProductForm = ({ product, categories }: Props) => {
 
       {/* Selector de tallas y fotos */}
       <div className="w-full">
+        <div className="flex flex-col mb-2">
+          <span>Inventario</span>
+          <input
+            type="number"
+            className="p-2 border rounded-md bg-gray-200"
+            {...register("inStock", { required: true, min: 0 })}
+          />
+        </div>
+
         {/* As checkboxes */}
         <div className="flex flex-col">
           <span>Tallas</span>
@@ -178,11 +211,11 @@ export const ProductForm = ({ product, categories }: Props) => {
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {product.ProductImage.map((image) => (
+            {product.ProductImage?.map((image) => (
               <div key={image.id}>
-                <Image
+                <ProductImage
                   alt={product.title ?? ""}
-                  src={`/products/${image.url}`}
+                  src={image.url}
                   width={300}
                   height={300}
                   className="rounded-t shadow-md"

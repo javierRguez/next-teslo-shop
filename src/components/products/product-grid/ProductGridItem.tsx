@@ -1,7 +1,7 @@
 "use client";
 
+import { ProductImage } from "@/components/product/product-image/ProductImage";
 import { Product } from "@/interfaces";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -13,11 +13,11 @@ export const ProductGridItem = ({ product }: Props) => {
   const [displayImage, setDisplayImage] = useState(product.images[0]);
 
   return (
-    <div className="rounded-md overflow-hidden fade-in">
-      <Image
+    <div className="rounded-md overflow-hidden fade-in flex flex-col justify-between">
+      <ProductImage
         // key para forzar renderizado de la imagen con animacion
         key={`${displayImage + product.slug}`}
-        src={`/products/${displayImage}`}
+        src={displayImage}
         alt={product.title}
         className="w-full object-cover fade-in rounded"
         width={500}

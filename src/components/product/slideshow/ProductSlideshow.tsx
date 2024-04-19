@@ -12,8 +12,7 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
 import "./slideshow.css";
-import Image from "next/image";
-// import { ProductImage } from "../product-image/ProductImage";
+import { ProductImage } from "@/components";
 
 interface Props {
   images: string[];
@@ -23,7 +22,6 @@ interface Props {
 
 export const ProductSlideshow = ({ images, title, className }: Props) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperObject>();
-
   return (
     <div className={className}>
       <Swiper
@@ -44,17 +42,28 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
         modules={[FreeMode, Navigation, Thumbs, Autoplay]}
         className="mySwiper2"
       >
-        {images.map((image) => (
-          <SwiperSlide key={image}>
-            <Image
+        {images.length > 0 ? (
+          images.map((image) => (
+            <SwiperSlide key={image}>
+              <ProductImage
+                width={1024}
+                height={800}
+                src={image}
+                alt={title}
+                className="rounded-lg object-fill"
+              />
+            </SwiperSlide>
+          ))
+        ) : (
+          <SwiperSlide key={"placeholder"}>
+            <ProductImage
               width={1024}
               height={800}
-              src={`/products/${image}`}
               alt={title}
               className="rounded-lg object-fill"
             />
           </SwiperSlide>
-        ))}
+        )}
       </Swiper>
 
       <Swiper
@@ -66,17 +75,28 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper"
       >
-        {images.map((image) => (
-          <SwiperSlide key={image}>
-            <Image
+        {images.length > 0 ? (
+          images.map((image) => (
+            <SwiperSlide key={image}>
+              <ProductImage
+                width={300}
+                height={300}
+                src={image}
+                alt={title}
+                className="rounded-lg object-fill"
+              />
+            </SwiperSlide>
+          ))
+        ) : (
+          <SwiperSlide key={"placeholder"}>
+            <ProductImage
               width={300}
               height={300}
-              src={`/products/${image}`}
               alt={title}
               className="rounded-lg object-fill"
             />
           </SwiperSlide>
-        ))}
+        )}
       </Swiper>
     </div>
   );
