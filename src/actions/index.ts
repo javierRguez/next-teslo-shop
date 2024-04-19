@@ -18,3 +18,4 @@ export * from "./product/product-pagination";
 export * from "./user/change-user-rol";
 export * from "./user/get-paginated-users";
 export * from "./product/create-update-product";
+export * from "./product/check-slug-exist";
