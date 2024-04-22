@@ -1,6 +1,10 @@
 "use client";
 
-import { checkSlugExist, createUpdateProduct } from "@/actions";
+import {
+  checkSlugExist,
+  createUpdateProduct,
+  deleteProductImage,
+} from "@/actions";
 import { ProductImage } from "@/components";
 import useDebounce from "@/hooks/useDebounce";
 import {
@@ -328,7 +332,7 @@ export const ProductForm = ({ product, categories }: Props) => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {product.ProductImage?.map((image) => (
-                <div key={image.id}>
+                <div key={image.id} className="w-fit m-auto">
                   <ProductImage
                     alt={product.title ?? ""}
                     src={image.url}
@@ -338,7 +342,7 @@ export const ProductForm = ({ product, categories }: Props) => {
                   />
                   <button
                     type="button"
-                    onClick={() => {}}
+                    onClick={() => deleteProductImage(image.id, image.url)}
                     className="btn-danger w-full rounded-b-xl"
                   >
                     Eliminar

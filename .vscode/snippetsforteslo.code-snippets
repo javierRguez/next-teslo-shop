@@ -18,5 +18,10 @@
     "prefix": "usecl",
     "body": ["'use client'"],
     "description": "use client tag for Nextjs"
+  },
+  "use Server Next": {
+    "prefix": "usese",
+    "body": ["'use server'"],
+    "description": "use server tag for Nextjs"
   }
 }
