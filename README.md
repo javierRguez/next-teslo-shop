@@ -9,6 +9,7 @@
 5. Correr las migraciones de Prisma `npx prisma migrate dev`
 6. Ejecutar seed `npm run seed`
 7. Correr el proyecto `npm run dev`
+8. Limpiar el localStorage del navegador
 
 # Prisma TUTO
 
