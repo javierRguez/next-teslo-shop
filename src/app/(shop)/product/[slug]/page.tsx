@@ -37,7 +37,11 @@ export async function generateMetadata(
       title: product?.title ?? "Producto no encontrado",
       description: product?.description ?? "",
       // images: [], // https://misitioweb.com/products/prod-1/image.png
-      images: [`/products/${product?.images[1]}`],
+      images: [
+        product?.ProductImage[1].url ??
+          product?.ProductImage[1].url ??
+          "https://ot-teslo-shop.vercel.app/imgs/placeholder.jpg",
+      ],
     },
   };
 }

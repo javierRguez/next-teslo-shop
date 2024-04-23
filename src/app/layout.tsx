@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     default: "Home - Teslo | Shop",
   },
   description: "Una tienda virtual de productos",
+  openGraph: {
+    images: ["https://ot-teslo-shop.vercel.app/imgs/home-shop.png"],
+  },
 };
 
 export default function RootLayout({
