@@ -29,6 +29,11 @@ export async function generateMetadata(
 
   // optionally access and extend (rather than replace) parent metadata
   // const previousImages = (await parent).openGraph?.images || []
+  const image = product?.ProductImage[0]?.url
+    ? product?.ProductImage[0]?.url.startsWith("http")
+      ? product?.ProductImage[0]?.url
+      : `/products/${product?.ProductImage[0]?.url}`
+    : "https://ot-teslo-shop.vercel.app/imgs/placeholder.jpg";
 
   return {
     title: product?.title ?? "Producto no encontrado",
@@ -36,11 +41,7 @@ export async function generateMetadata(
     openGraph: {
       title: product?.title ?? "Producto no encontrado",
       description: product?.description ?? "",
-      images: [
-        product?.ProductImage[1].url ??
-          product?.ProductImage[1].url ??
-          "https://ot-teslo-shop.vercel.app/imgs/placeholder.jpg",
-      ],
+      images: [image],
     },
   };
 }
@@ -48,7 +49,7 @@ export async function generateMetadata(
 export default async function ProductPage({ params }: Props) {
   const { slug } = params;
   const product = await getProductBySlug(slug);
-
+  console.log(product?.ProductImage);
   if (!product) {
     notFound();
   }
