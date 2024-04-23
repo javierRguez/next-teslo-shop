@@ -20,3 +20,9 @@
 ## Crear tsconfig para la carpeta de seeds
 
 `npx tsc --init`
+
+## Activar PROD DB
+
+1. Añadir url de DB en .env
+2. Crear tablas `npx prisma migrate deploy`
+3. Añadir datos `npm run seed`
