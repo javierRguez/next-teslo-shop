@@ -36,7 +36,6 @@ export async function generateMetadata(
     openGraph: {
       title: product?.title ?? "Producto no encontrado",
       description: product?.description ?? "",
-      // images: [], // https://misitioweb.com/products/prod-1/image.png
       images: [
         product?.ProductImage[1].url ??
           product?.ProductImage[1].url ??
